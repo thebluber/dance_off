@@ -47,7 +47,7 @@ re.c('die')
           this.clicked = true;
           this.alpha = 0.5;
         }
-        console.log('clicked die!');
+        //console.log('clicked die!');
       }
     })
 });

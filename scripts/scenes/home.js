@@ -11,17 +11,7 @@ re.scene('home')
   //stop the browser from moving around
   re.preventDefault('left right up down');
   
-  var radius = 10;
-  var color = '#FF0000';
 
-  //create new circle on canvas
-  re.circle(radius, color)
-  //from align component
-  .alignHor()
-  .alignVer();
-
-  //find circle and change speed
-  re('circle').first().attr('speed', 15);
   
   var posX = 10;
   var posY = 10;
@@ -30,6 +20,100 @@ re.scene('home')
     .attr({posX: posX, posY: posY});
     posX += 60;  
   }
+  re.load('DiscoDino_mini.png')
+ 
+  //place dinos and row boxes on screen player1 
+  var x = 130;
+  var y = 110;
+  for (var j = 0; j < 5; j++){
+    //row
+    var row  = re.e('row')
+                .attr({
+                sizeX: 60,
+                sizeY: 300,
+                posX: x,
+                posY: 110,
+                alpha: 0
+              });
+    row.dinos = [];
+    //console.log('col ' + String(j));
+    for (var i = 0; i < 6; i++){
+      var dino = re.e('sprite DiscoDino_mini.png')
+      dino.frame.size = {x: 60, y: 83};
+      //dino.animate('live');
+      dino.posX = x;
+      dino.posY = y;
+      row.addDino(dino);
+      y += 40;
+    }
+    //console.log(row.dinos);
+    y = 110;
+    x += 60;
+  }
 
-  re.e('dice')
+  var texts = ["5er:6", "4er:5", "GrStr:4", "FH:3", "KlStr:2", "3er:1"];
+  var y = 140;
+  //place würfelzüge
+  for (var i = 0; i < 6; i++){
+    re.e('diceType')
+    .attr({
+      posY: y,
+      text: texts[i],
+      value: 6 - i
+    });
+    y += 40;
+  } 
+  re.e('rect')
+  .attr({
+    sizeX: 420,
+    sizeY: 20,
+    color: 'rgb(200, 200, 200)',
+    posX: 20,
+    posY: 400
+  });
+//place dinos and rows for player2
+  x = 130;
+  y = 410;
+  for (var j = 0; j < 5; j++){
+    //row
+    var row = re.e('row')
+    .attr({
+      sizeX: 60,
+      sizeY: 300,
+      posX: x,
+      posY: 410,
+      alpha: 0
+    });
+    row.dinos = [];
+    //console.log('col ' + String(j));
+    for (var i = 0; i < 6; i++){
+      var dino = re.e('sprite DiscoDino_mini.png')
+      dino.frame.size = {x: 60, y: 83};
+      //dino.animate('live');
+      dino.posX = x;
+      dino.posY = y;
+      row.addDino(dino);
+      y += 40;
+    }
+    y = 410;
+    x += 60;
+    console.log(row.dinos);
+  }
+
+  texts = texts.reverse();
+  y = 450;
+  //place würfelzüge
+  for (var i = 0; i < 6; i++){
+    re.e('diceType')
+    .attr({
+      posY: y,
+      text: texts[i],
+      value: i + 1
+    });
+    y += 40;
+  } 
+  re.e('dice');
+  re.e('changePlayer');
+  re.player(0, 'Jiayi', 300, 10);
+  re.player(1, 'Jiayi1', 300, 30);
 });
